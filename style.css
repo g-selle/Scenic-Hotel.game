@@ -1,0 +1,388 @@
+* {
+    box-sizing: border-box;
+    font-family: "Courier New", monospace;
+}
+
+body {
+    margin: 0;
+    background: black;
+    color: white;
+    overflow: hidden;
+}
+
+/* SCREENS */
+.screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* FORCE HIDDEN ELEMENTS OFFSCREEN + NO CLICKS */
+.hidden {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+/* LANDING */
+.landing-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -3;
+}
+
+/* VIDEO BACKGROUND */
+#background-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: black;
+    z-index: -2;
+}
+
+/* STORY */
+.story-container {
+    max-width: 700px;
+    padding: 40px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid #700;
+    z-index: 1;
+}
+
+#story-text,
+#ending-text {
+    font-size: 18px;
+    line-height: 1.7;
+    text-align: left;
+    margin: 0 auto;
+}
+
+.cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+}
+
+#cursor,
+#ending-cursor {
+    color: red;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+
+/* BUTTONS */
+button {
+    padding: 10px 25px;
+    margin-top: 20px;
+    background: transparent;
+    border: 1px solid #aaa;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    border-color: red;
+}
+
+#continue-button,
+#restart-button {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+#continue-button.show,
+#restart-button.show {
+    opacity: 1;
+}
+
+/* PUZZLES */
+.puzzle-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.object,
+.room,
+.event,
+.choose-suspect {
+    padding: 12px;
+    border: 1px solid #555;
+    cursor: pointer;
+    background: #111;
+}
+
+.object:hover,
+.room:hover,
+.event:hover,
+.choose-suspect:hover,
+.inspect-button:hover {
+    border-color: red;
+}
+
+.event.correct,
+.choose-suspect.correct {
+    color: #7aff00;
+    border-color: #7aff00;
+}
+
+.event.wrong {
+    color: #ff5555;
+    border-color: #ff5555;
+}
+
+.timeline-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* SUSPECT FILES */
+.suspects {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    z-index: 1;
+}
+
+.suspect-card {
+    width: 220px;
+    padding: 20px;
+    background: #1a1a1a;
+    border: 2px solid #555;
+    border-radius: 6px;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+}
+
+.suspect-card h3 {
+    color: #ffcc00;
+    margin-top: 0;
+}
+
+.inspect-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #222;
+    border: 1px solid #888;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* MODAL — FIXED FOR BLACK RECTANGLE BUG */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    pointer-events: auto;
+}
+
+/* MODAL — FIXED FOR SCREEN, SCROLLABLE CONTENT */
+.modal-content {
+    background: #111;
+    border: 2px solid #555;
+    padding: 20px;
+    width: 90%;           /* almost full screen width */
+    max-width: 450px;     /* won’t get huge on big screens */
+    max-height: 80vh;     /* won’t exceed screen height */
+    overflow-y: auto;     /* scroll if content too tall */
+    text-align: left;
+    position: relative;
+    animation: popFile 0.3s ease-out;
+}
+
+/* Optional: nicer scrollbar for aesthetic */
+.modal-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background-color: #700;
+    border-radius: 3px;
+}
+/* ============================= */
+/* CASE FILE CLOSE BUTTON */
+/* ============================= */
+
+.case-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 36px;              /* BIGGER */
+    font-weight: bold;
+    color: #ffffff;               /* color visibility */
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid #550000;
+    transition: 0.2s ease;
+}
+
+.case-close:hover {
+    background: red;
+    color: white;
+    transform: scale(1.2);
+}
+/* FILE STRUCTURE */
+.file-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #555;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.case-number {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+.file-status {
+    color: #ff5555;
+}
+
+.file-body {
+    white-space: pre-line;
+    font-size: 14px;
+    line-height: 1.6;
+    position: relative;
+}
+
+/* REDACTED TEXT */
+.redacted {
+    background: black;
+    color: black;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+/* FBI STAMP */
+.stamp {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    font-size: 28px;
+    color: rgba(255, 0, 0, 0.25);
+    border: 3px solid rgba(255, 0, 0, 0.3);
+    padding: 10px 20px;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+/* POP OUT ANIMATION */
+.modal-content {
+    animation: popFile 0.3s ease-out;
+}
+
+@keyframes popFile {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+/* SCREEN FLICKER */
+#screen-flicker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+}
+
+#screen-flicker.active {
+    animation: flicker 0.3s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+/* FBI STAMP */
+#fbi-stamp {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(3);
+    font-size: 4rem;
+    font-weight: bold;
+    color: red;
+    border: 6px solid red;
+    padding: 20px 40px;
+    opacity: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.8);
+    letter-spacing: 5px;
+}
+
+#fbi-stamp.slam {
+    animation: stampSlam 0.6s forwards;
+}
+
+@keyframes stampSlam {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(5) rotate(-10deg); }
+    60% { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(3deg); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+}
+
+/* FADE OUT */
+.fade-out {
+    animation: fadeBlack 2s forwards;
+}
+
+@keyframes fadeBlack {
+    to { background-color: black; }
+}
+
+#result-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding: 40px;       /* give some space around */
+    overflow-y: auto;    /* allow scrolling if story is too long */
+}
+
+#result-text {
+    max-width: 700px;
+    max-height: 80vh;   /* ensures it doesn’t fill entire screen vertically */
+    font-size: 20px;
+    line-height: 1.8;
+    text-align: center;
+
+    overflow-y: auto;   /* scroll if text exceeds max-height */
+    padding: 20px;
+    background: rgba(0,0,0,0.7); /* subtle background for readability */
+    border: 1px solid #700;      /* border to match story style */
+    border-radius: 8px;
+}
+

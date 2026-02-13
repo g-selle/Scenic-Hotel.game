@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Scenic Hotel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= LANDING SCREEN ================= -->
+<div id="landing-screen" class="screen">
+    <img src="hotel.lobby.jpg" class="landing-image" alt="Hotel Lobby">
+    <h1>The Scenic Hotel</h1>
+    <input id="name-input" placeholder="Enter your name">
+    <button id="landing-continue">Continue</button>
+</div>
+
+<!-- ================= STORY SCREEN ================= -->
+<div id="story-screen" class="screen hidden">
+    <video autoplay muted loop id="background-video">
+        <source src="Hotel.background.mp4" type="video/mp4">
+    </video>
+
+    <div class="story-container">
+        <div id="story-text"></div>
+        <button id="story-continue" class="hidden">Continue</button>
+    </div>
+</div>
+
+<!-- ================= PUZZLE 1 SCREEN ================= -->
+<div id="puzzle1-screen" class="screen hidden">
+    <h2>The Scenic Hotel Lobby</h2>
+
+   <p id="logic-clues">
+    <strong>Clues:</strong><br>
+    1. It never misses a moment.<br>
+    2. It keeps moving day, or night.<br>
+    3. It's always watching...always counting.
+</p>
+
+    <div class="puzzle-grid">
+        <div class="object" data-id="painting">🖼 Painting</div>
+        <div class="object" data-id="vase">🏺 Vase</div>
+        <div class="object" data-id="chair">🪑 Chair</div>
+        <div class="object" data-id="clock">🕰 Clock</div>
+    </div>
+
+    <p id="puzzle1-message"></p>
+</div>
+
+
+<!-- ================= PUZZLE 2 SCREEN ================= -->
+<div id="puzzle2-screen" class="screen hidden">
+    <h2>Guest Log</h2>
+
+    <ul class="clues">
+        <li>• Not ground floor</li>
+        <li>• Even-numbered room</li>
+        <li>• Closest to stairwell</li>
+    </ul>
+
+    <div class="options">
+        <button class="room" data-room="102">Room 102</button>
+        <button class="room" data-room="203">Room 203</button>
+        <button class="room" data-room="204">Room 204</button>
+        <button class="room" data-room="305">Room 305</button>
+    </div>
+
+    <p id="puzzle2-message"></p>
+</div>
+
+
+<!-- ================= PUZZLE 3 SCREEN ================= -->
+<div id="puzzle3-screen" class="screen hidden">
+    <h2>The Last Night</h2>
+    <p class="clue">Reconstruct the events in the correct order:</p>
+
+    <div class="timeline-options">
+        <button class="event" data-step="1">She checked into Room 204</button>
+        <button class="event" data-step="2">Maintenance entered the room</button>
+        <button class="event" data-step="3">A loud argument was reported</button>
+        <button class="event" data-step="4">The notebook went missing</button>
+    </div>
+
+    <p id="timeline-progress">Progress: 0/4</p>
+</div>
+
+
+<!-- ================= PUZZLE 4 SCREEN ================= -->
+<div id="puzzle4-screen" class="screen hidden">
+    <h2>Recovered Notebook Fragment</h2>
+
+    <p>Reconstruct the hidden message:</p>
+
+    <div class="scramble-options">
+        <button class="letter">D</button>
+        <button class="letter">A</button>
+        <button class="letter">N</button>
+        <button class="letter">I</button>
+        <button class="letter">E</button>
+        <button class="letter">L</button>
+    </div>
+
+    <p id="scramble-progress"></p>
+</div>
+
+<!-- ================= SUSPECT SCREEN ================= -->
+<div id="suspect-screen" class="screen hidden">
+
+    <h2>Suspect Files</h2>
+    <p>Review the files carefully. You only get one chance.</p>
+
+    <div class="suspects">
+
+        <div class="suspect-card" data-suspect="Mr. Black">
+            <h3>Mr. Black</h3>
+            <p>Position: Hotel Manager</p>
+            <button class="inspect-button">Inspect File</button>
+        </div>
+
+        <div class="suspect-card" data-suspect="Ms. White">
+            <h3>Ms. White</h3>
+            <p>Position: Housekeeping</p>
+            <button class="inspect-button">Inspect File</button>
+        </div>
+
+        <div class="suspect-card" data-suspect="Mr. Gray">
+            <h3>Mr. Gray</h3>
+            <p>Position: Maintenance</p>
+            <button class="inspect-button">Inspect File</button>
+        </div>
+
+    </div>
+
+
+</div>
+
+<!-- ================= MODAL ================= -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+
+        <span id="close-modal">&times;</span>
+
+        <div class="file-header">
+            <div id="case-number"></div>
+            <div class="file-status">STATUS: ACTIVE</div>
+        </div>
+
+        <div id="modal-text"></div>
+
+        <div class="stamp">FBI CONFIDENTIAL</div>
+
+        <button id="choose-suspect-button">This is the culprit</button>
+
+    </div>
+</div>
+
+<!-- ================= RESULT SCREEN ================= -->
+<div id="result-screen" class="screen hidden">
+    <div id="result-text"></div>
+</div> 
+<!-- Back button -->
+<button id="go-back-button" class="hidden">Go Back</button>
+<!-- Background Music -->
+<audio id="background-music" loop>
+    <source src="rest.mp4" type="audio/mp4">
+</audio>
+
+<!-- Ending Music -->
+<audio id="ending-music" loop>
+    <source src="ending.mp3" type="audio/mp3">
+</audio>
+
+<!-- Heartbeat Sound -->
+<audio id="heartbeat-sound" loop>
+    <source src="heartbeat.mp4" type="audio/mp4">
+</audio>
+
+<script src="script.js"></script>
+</body>
+</html>
